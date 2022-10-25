@@ -14,7 +14,7 @@ function Form({ onSubmit }) {
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  // const items = useSelector(state => state.contacts.items);
+  const items = useSelector(state => state.contacts.items);
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -35,8 +35,17 @@ function Form({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // onSubmit(name, number);
+
+    if (
+      items
+        .map(contact => contact.name.toLowerCase())
+        .includes(name.toLowerCase())
+    ) {
+      return alert(`${name} is already in contacts`);
+    }
+
     dispatch(addContact(name, number));
+
     reset();
   };
 
