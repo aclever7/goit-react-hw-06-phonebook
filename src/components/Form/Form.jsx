@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/contacts/actions';
 import PropTypes from 'prop-types';
 import {
   StyledForm,
@@ -11,8 +13,12 @@ function Form({ onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
+  const dispatch = useDispatch();
+  // const items = useSelector(state => state.contacts.items);
+
   const handleChange = e => {
     const { name, value } = e.currentTarget;
+
     switch (name) {
       case 'name':
         setName(value);
@@ -29,7 +35,8 @@ function Form({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit(name, number);
+    // onSubmit(name, number);
+    dispatch(addContact(name, number));
     reset();
   };
 
@@ -43,6 +50,7 @@ function Form({ onSubmit }) {
       <StyledLabel>
         Name
         <StyledInput
+          value={name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -54,6 +62,7 @@ function Form({ onSubmit }) {
       <StyledLabel>
         Number
         <StyledInput
+          value={number}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

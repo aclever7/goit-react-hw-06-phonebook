@@ -1,21 +1,31 @@
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeContact } from '../../redux/contacts/actions';
 import {
   ContactList,
   ContactListItem,
   ContactListButton,
 } from './Contact.styled';
 
-function Contact({ handleContactFilter, deleteContact }) {
+const Contact = () => {
+  const filter = useSelector(state => state.contacts.filter).toLowerCase();
+  const items = useSelector(state => state.contacts.items);
+  const contacts = items.filter(({ name }) =>
+    name.toLowerCase().includes(filter)
+  );
+  const dispatch = useDispatch();
+
   return (
     <ContactList>
-      {handleContactFilter.map(({ name, number, id }) => {
+      {contacts.map(({ id, name, number }) => {
         return (
           <ContactListItem key={id}>
             {name}: {number}
             <ContactListButton
+              key={id}
+              name={name}
               type="button"
-              id={id}
-              onClick={() => deleteContact(id)}
+              onClick={() => dispatch(removeContact(id))}
             >
               Delete
             </ContactListButton>
@@ -24,7 +34,7 @@ function Contact({ handleContactFilter, deleteContact }) {
       })}
     </ContactList>
   );
-}
+};
 
 Contact.propTypes = {
   handleContactFilter: PropTypes.arrayOf(
