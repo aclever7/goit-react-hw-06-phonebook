@@ -9,7 +9,7 @@ import {
   StyledButton,
 } from './Form.styled';
 
-function Form({ onSubmit }) {
+const Form = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -83,7 +83,7 @@ function Form({ onSubmit }) {
       <StyledButton type="submit">Add contact</StyledButton>
     </StyledForm>
   );
-}
+};
 
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
