@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
 import Container from './Container';
 import Section from './Section';
 import Form from './Form';
